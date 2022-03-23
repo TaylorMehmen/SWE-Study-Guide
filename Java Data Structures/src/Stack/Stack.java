@@ -1,25 +1,48 @@
 package Stack;
 
-public class Stack {
-    int[] stack = new int[5];
-    int top = 0;
-    public void push(int data) {
-        stack[top] = data;
-        top ++;
-    }
+import java.util.EmptyStackException;
 
-    public int pop() {
-        top--;
-        return stack[top];
-    }
+public class Stack<T> {
+    private StackNode<T> top;
 
-    public int pick() {
-        return stack[top-1];
-    }
+    private static class StackNode<T> {
+        private T value;
+        private StackNode<T> next;
 
-    public void show() {
-        for(int n: stack) {
-            System.out.println(n);
+        StackNode(T value) {
+            this.value = value;
         }
     }
+
+    public void push(T data) {
+        StackNode<T> cur = new StackNode<>(data);
+        cur.next = top;
+        top = cur;
+    }
+
+    public T peek() {
+        if (top == null) {
+            throw new EmptyStackException();
+        }
+        return top.value;
+    }
+
+    public T pop() {
+        if (top == null) {
+            throw new EmptyStackException();
+        }
+        T popped = top.value;
+        top = top.next;
+        return popped;
+    }
+
+    public void clear() {
+        top = null;
+    }
+
+
+    public Boolean isEmpty() {
+        return top == null;
+    }
+
 }
