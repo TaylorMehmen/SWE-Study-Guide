@@ -71,14 +71,33 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     private T minValue(TreeNode<T> root) {
-        T minv = root.data;
-        while (root.left != null) {
-            minv = root.left.data;
-            root = root.left;
+        if (root.left == null) return root.data;
+        return minValue(root.left);
+    }
+/*100%
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) return root;
+        else if (root.val > key) root.left = deleteNode(root.left, key);
+        else if (root.val < key) root.right = deleteNode(root.right, key);
+        else {
+            if (root.right == null) {
+                return root.left;
+            }
+            else if (root.left == null) {
+                return root.right;
+            }
+            root.val = getMinVal(root.right);
+            root.right = deleteNode(root.right, root.val);
         }
-        return minv;
+        return root;
     }
 
+    private int getMinVal(TreeNode root) {
+        if (root.left == null) return root.val;
+        return getMinVal(root.left);
+    }
+}*/
 
 
 
